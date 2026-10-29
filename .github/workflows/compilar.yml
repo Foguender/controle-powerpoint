@@ -1,0 +1,22 @@
+name: Gerar Executavel Windows
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Instalar Ferramentas
+      run: |
+        pip install pyinstaller flask pyautogui
+    - name: Criar EXE
+      run: |
+        pyinstaller --onefile controle.py
+    - name: Guardar Arquivo
+      uses: actions/upload-artifact@v4
+      with:
+        name: programa-do-pendrive
+        path: dist/controle.exe
